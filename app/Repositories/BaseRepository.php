@@ -87,6 +87,12 @@ abstract class BaseRepository
         return $query;
     }
 
+    //search
+    public function search($key,$value){
+
+        return $this->model::where($key,"like",'%'.$value.'%');
+    }
+
     /**
      * Retrieve all records with given filter criteria
      */

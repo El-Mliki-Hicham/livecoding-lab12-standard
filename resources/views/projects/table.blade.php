@@ -1,41 +1,41 @@
-<div class="card-body p-0">
-    <div class="table-responsive">
-        <table class="table" id="projects-table">
-            <thead>
+<div class="table-responsive" id="main-table">
+    <table class="table">
+        <thead>
             <tr>
                 <th>Title</th>
                 <th>Description</th>
                 <th colspan="3">Action</th>
             </tr>
-            </thead>
-            <tbody>
-            @foreach($projects as $project)
+        </thead>
+        <tbody>
+            @foreach ($projects as $project)
                 <tr>
-                    <td>{{ $project->title }}</td>
+                    <td>{{ $project->title }}s</td>
                     <td>{{ $project->description }}</td>
-                    <td  style="width: 120px">
+                    <td style="width: 120px">
                         {!! Form::open(['route' => ['projects.destroy', $project->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="{{ route('projects.show', [$project->id]) }}"
-                               class='btn btn-default btn-xs'>
+                            <a href="{{ route('projects.show', [$project->id]) }}" class='btn btn-default btn-xs'>
                                 <i class="far fa-eye"></i>
                             </a>
-                            <a href="{{ route('projects.edit', [$project->id]) }}"
-                               class='btn btn-default btn-xs'>
+                            <a href="{{ route('projects.edit', [$project->id]) }}" class='btn btn-default btn-xs'>
                                 <i class="far fa-edit"></i>
                             </a>
-                            {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                            {!! Form::button('<i class="far fa-trash-alt"></i>', [
+                                'type' => 'submit',
+                                'class' => 'btn btn-danger btn-xs',
+                                'onclick' => "return confirm('Are you sure?')",
+                            ]) !!}
                         </div>
                         {!! Form::close() !!}
                     </td>
                 </tr>
             @endforeach
-            </tbody>
-        </table>
-    </div>
-
+        </tbody>
+    </table>
     <div class="card-footer clearfix">
-        <div class="float-right">
+        <div class="float-right ">
+            <!--start-pagination--->
             @include('adminlte-templates::common.paginate', ['records' => $projects])
         </div>
     </div>

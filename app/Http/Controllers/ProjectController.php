@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Project;
 use App\Repositories\ProjectRepository;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends AppBaseController
 {
@@ -24,10 +26,20 @@ class ProjectController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $projects = $this->projectRepository->paginate(10);
+            if($request->ajax())
+            {
+               $query = $request->get('query');
 
-        return view('projects.index')
-            ->with('projects', $projects);
+             $projects =$this->projectRepository->search('title',$query)->paginate(5);
+             return view('projects.table', compact('projects'))->render();
+            }else{
+
+                $projects = $this->projectRepository->paginate(5);
+
+                return view('projects.index')
+                    ->with('projects', $projects);
+                }
+
     }
 
     /**
@@ -125,4 +137,18 @@ class ProjectController extends AppBaseController
 
         return redirect(route('projects.index'));
     }
+
+
+    // function fetch_data(Request $request)
+    // {
+    //  if($request->ajax())
+    //  {
+    //     $query = $request->get('query');
+    //   $projects = Project::where('title', 'like', '%'.$query.'%')
+    //                 // ->orWhere('Nom_tache', 'like', '%'.$query.'%')
+    //                 ->paginate(5);
+    //                 // dd($data);
+    //   return view('projects.table', compact('projects'))->render();
+    //  }
+    // }
 }
