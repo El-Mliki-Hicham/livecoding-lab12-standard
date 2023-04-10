@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\type_handicapController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::resource('typeHandicap', type_handicapController::class);
+Route::resource('projects', App\Http\Controllers\ProjectController::class);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
